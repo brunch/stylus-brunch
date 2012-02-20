@@ -1,0 +1,21 @@
+nib = require 'nib'
+stylus = require 'stylus'
+sysPath = require 'path'
+
+module.exports = class StylusCompiler
+  compilerType: 'stylesheet'
+  extension: 'styl'
+  generators:
+    backbone:
+      style: '@import "nib"\n'
+
+  constructor: (@config) ->
+    null
+
+  compile: (data, path, callback) ->
+    stylus(data)
+      .set('compress', yes)
+      .set('firebug', !!@config.stylus?.firebug)
+      .include(sysPath.join @config.rootPath, 'app', 'styles')
+      .use(nib())
+      .render(callback)
