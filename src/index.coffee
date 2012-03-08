@@ -3,7 +3,8 @@ stylus = require 'stylus'
 sysPath = require 'path'
 
 module.exports = class StylusCompiler
-  compilerType: 'stylesheet'
+  brunchPlugin: yes
+  type: 'stylesheet'
   extension: 'styl'
   generators:
     backbone:
