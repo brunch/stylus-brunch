@@ -17,6 +17,7 @@ module.exports = class StylusCompiler
     stylus(data)
       .set('compress', yes)
       .set('firebug', !!@config.stylus?.firebug)
-      .include(sysPath.join @config.rootPath, 'app', 'styles')
+      .include(sysPath.join @config.rootPath)
+      .include(sysPath.dirname path)
       .use(nib())
       .render(callback)
