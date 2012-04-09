@@ -1,7 +1,6 @@
 ## stylus-brunch 1.1.0 (April 09, 2012)
 * Update nib to 0.4.0 & stylus to 0.24.0.
-* Add windows support.
-* Fix changelog.
+* Added windows support.
 
 ## stylus-brunch 1.0.1 (March 16, 2012)
 * Added support for relative paths.
