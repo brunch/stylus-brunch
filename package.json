@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "coffee-script": "1.2.0",
-    "stylus": "0.23.0",
-    "nib": "0.3.2"
+    "stylus": "0.24.0",
+    "nib": "0.4.0"
   },
   "devDependencies": {
     "mocha": "0.12.1",
