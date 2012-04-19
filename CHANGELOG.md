@@ -1,3 +1,6 @@
+## stylus-brunch 1.1.2 (April 19, 2012)
+* Fixed 'object has no method map' bug. Closes #2.
+
 ## stylus-brunch 1.1.1 (April 15, 2012)
 * Updated to nib 0.4.1.
 * Added support for chain compilation.
