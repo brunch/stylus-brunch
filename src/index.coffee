@@ -24,7 +24,7 @@ module.exports = class StylusCompiler
       .render(callback)
 
   getDependencies: (data, path, callback) =>
-    paths = data.match(@_dependencyRegExp) or ''
+    paths = data.match(@_dependencyRegExp) or []
     parent = sysPath.dirname path
     dependencies = paths
       .map (path) =>
