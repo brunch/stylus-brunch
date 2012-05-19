@@ -15,13 +15,14 @@ module.exports = class StylusCompiler
     null
 
   compile: (data, path, callback) =>
-    stylus(data)
+    compiler = stylus(data)
       .set('compress', no)
       .set('firebug', !!@config.stylus?.firebug)
       .include(sysPath.join @config.paths.root)
       .include(sysPath.dirname path)
       .use(nib())
-      .render(callback)
+    @config.stylus?.paths?.forEach (path)-> compiler.include(path)
+    compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
     paths = data.match(@_dependencyRegExp) or []

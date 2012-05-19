@@ -1,11 +1,19 @@
 var sysPath = require('path');
+var supportPath = sysPath.resolve(__dirname, 'support');
 
 describe('Plugin', function() {
   var plugin;
   var fileName = 'app/styles/style.styl';
-
+  
   beforeEach(function() {
-    plugin = new Plugin({paths: {root: ''}});
+    plugin = new Plugin({
+      paths: {
+        root: ''
+      },
+      stylus: {
+        paths: [supportPath]
+      }
+    });
   });
 
   it('should be an object', function() {
@@ -19,11 +27,22 @@ describe('Plugin', function() {
 
     it('should compile and produce valid result', function(done) {
       var content = 'body\n  font: 12px Helvetica, Arial, sans-serif';
-      var expected =  'body {\n  font: 12px Helvetica, Arial, sans-serif;\n}\n';
+      var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n}\n';
 
       plugin.compile(content, fileName, function(error, data) {
         expect(error).to.be(null);
         expect(data).to.equal(expected)
+        done();
+      });
+    });
+    
+    it('should compile and import from config.stylus.paths', function(done){
+      var content = "@import 'path_test'\n";
+      var expected = '.test {\n  color: #fff;\n}\n';
+      
+      plugin.compile(content, fileName, function(error, data) {
+        expect(error).to.be(null);
+        expect(data).to.equal(expected);
         done();
       });
     });
