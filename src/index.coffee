@@ -21,7 +21,7 @@ module.exports = class StylusCompiler
       .include(sysPath.join @config.paths.root)
       .include(sysPath.dirname path)
       .use(nib())
-    @config.stylus?.paths?.forEach -> compiler.include(path)
+    @config.stylus?.paths?.forEach (path)-> compiler.include(path)
     compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
