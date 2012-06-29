@@ -9,6 +9,8 @@ module.exports = class StylusCompiler
   generators:
     backbone:
       style: "@import 'nib'\n"
+    chaplin:
+      style: "@import 'nib'\n"
   _dependencyRegExp: /@import ['"](.*)['"]/g
 
   constructor: (@config) ->
