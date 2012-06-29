@@ -1,3 +1,7 @@
+# stylus-brunch 1.3.1 (June 29, 2012)
+* Added node.js 0.8 and 0.9 support.
+* Package is now precompiled before every publishing to npm.
+
 # stylus-brunch 1.3.0 (June 20, 2012)
 * Update stylus to 0.27.2 & nib to 0.5.0.
 
