@@ -17,12 +17,12 @@ describe('Plugin', function() {
   });
 
   it('should be an object', function() {
-    expect(plugin).to.be.ok();
+    expect(plugin).to.be.ok;
   });
 
   describe('#compile', function() {
     it('should has #compile method', function() {
-      expect(plugin.compile).to.be.a(Function);
+      expect(plugin.compile).to.be.an.instanceof(Function);
     });
 
     it('should compile and produce valid result', function(done) {
@@ -30,7 +30,7 @@ describe('Plugin', function() {
       var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n}\n';
 
       plugin.compile(content, fileName, function(error, data) {
-        expect(error).to.be(null);
+        expect(error).to.equal(null);
         expect(data).to.equal(expected)
         done();
       });
@@ -41,7 +41,7 @@ describe('Plugin', function() {
       var expected = '.test {\n  color: #fff;\n}\n';
       
       plugin.compile(content, fileName, function(error, data) {
-        expect(error).to.be(null);
+        expect(error).to.equal(null);
         expect(data).to.equal(expected);
         done();
       });
@@ -67,7 +67,7 @@ describe('Plugin', function() {
       ];
       
       plugin.getDependencies(content, fileName, function(error, dependencies) {
-        expect(error).not.to.be.ok();
+        expect(error).not.to.be.ok;
         expect(dependencies).to.eql(expected);
         done();
       });
