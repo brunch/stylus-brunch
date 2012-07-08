@@ -18,12 +18,21 @@ module.exports = class StylusCompiler
 
   compile: (data, path, callback) =>
     compiler = stylus(data)
-      .set('compress', no)
+      .set('compress', !!@config.stylus?.compress)
       .set('firebug', !!@config.stylus?.firebug)
       .include(sysPath.join @config.paths.root)
       .include(sysPath.dirname path)
       .use(nib())
-    @config.stylus?.paths?.forEach (path) -> compiler.include(path)
+
+
+    if @config.stylus
+      # Defines
+      for name, func of @config.stylus.defines or { }
+        compiler = compiler.define name, func
+
+      # Paths
+      @config.stylus.paths?.forEach (path) -> compiler.include(path)
+
     compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
