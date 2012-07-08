@@ -18,7 +18,7 @@ module.exports = class StylusCompiler
 
   compile: (data, path, callback) =>
     compiler = stylus(data)
-      .set('compress', !!@config.stylus?.compress)
+      .set('compress', no)
       .set('firebug', !!@config.stylus?.firebug)
       .include(sysPath.join @config.paths.root)
       .include(sysPath.dirname path)
@@ -27,8 +27,8 @@ module.exports = class StylusCompiler
 
     if @config.stylus
       # Defines
-      for name, func of @config.stylus.defines or { }
-        compiler = compiler.define name, func
+      defines = @config.stylus.defines ? {}
+      Object.keys(defines).forEach (name) -> compiler.define name, defines[name]
 
       # Paths
       @config.stylus.paths?.forEach (path) -> compiler.include(path)
