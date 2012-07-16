@@ -1,3 +1,8 @@
+# stylus-brunch 1.4.0 (July 17, 2012)
+* Fixed dependency parsing in comments.
+* Added support for `config.stylus.paths`.
+* Removed generators.
+
 # stylus-brunch 1.3.1 (June 29, 2012)
 * Added node.js 0.8 and 0.9 support.
 * Package is now precompiled before every publishing to npm.
