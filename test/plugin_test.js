@@ -66,6 +66,7 @@ describe('Plugin', function() {
 @import \"./valid3.styl\"\n\
 @import '../../vendor/styles/valid4'\n\
 @import 'nib'\n\
+// @import 'commented'\n\
 ";
 
       var expected = [

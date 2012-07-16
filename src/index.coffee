@@ -6,12 +6,7 @@ module.exports = class StylusCompiler
   brunchPlugin: yes
   type: 'stylesheet'
   extension: 'styl'
-  generators:
-    backbone:
-      style: "@import 'nib'\n"
-    chaplin:
-      style: "@import 'nib'\n"
-  _dependencyRegExp: /^\s*@import ['"](.*)['"]/g
+  _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
     null
@@ -24,31 +19,33 @@ module.exports = class StylusCompiler
       .include(sysPath.dirname path)
       .use(nib())
 
-
     if @config.stylus
-      # Defines
       defines = @config.stylus.defines ? {}
-      Object.keys(defines).forEach (name) -> compiler.define name, defines[name]
-
-      # Paths
-      @config.stylus.paths?.forEach (path) -> compiler.include(path)
-
+      Object.keys(defines).forEach (name) ->
+        compiler.define name, defines[name]
+      @config.stylus.paths?.forEach (path) ->
+        compiler.include(path)
     compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
-    paths = data.match(@_dependencyRegExp) or []
+    re = @_dependencyRegExp
     parent = sysPath.dirname path
-    dependencies = paths
-      .map (path) =>
-        res = @_dependencyRegExp.exec(path)
-        @_dependencyRegExp.lastIndex = 0
-        (res or [])[1]
-      .filter((path) => !!path and path isnt 'nib')
-      .map (path) =>
+    dependencies = data
+      .split('\n')
+      .map (line) ->
+        line.match(re)
+      .filter (match) ->
+        match?.length > 0
+      .map (match) ->
+        match[1]
+      .filter (path) ->
+        !!path and path isnt 'nib'
+      .map (path) ->
         if sysPath.extname(path) isnt ".#{@extension}"
           path + ".#{@extension}"
         else
           path
-      .map(sysPath.join.bind(null, parent))
-    process.nextTick =>
+      .map (path) ->
+        sysPath.join parent, path
+    process.nextTick ->
       callback null, dependencies
