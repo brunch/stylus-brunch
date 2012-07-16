@@ -1,17 +1,21 @@
+var fs = require('fs');
 var sysPath = require('path');
 var supportPath = sysPath.resolve(__dirname, 'support');
 
 describe('Plugin', function() {
   var plugin;
   var fileName = 'app/styles/style.styl';
-  
+
   beforeEach(function() {
     plugin = new Plugin({
       paths: {
         root: ''
       },
       stylus: {
-        paths: [supportPath]
+        paths: [supportPath],
+        defines: {
+          url: require('stylus').url()
+        }
       }
     });
   });
@@ -26,8 +30,13 @@ describe('Plugin', function() {
     });
 
     it('should compile and produce valid result', function(done) {
-      var content = 'body\n  font: 12px Helvetica, Arial, sans-serif';
-      var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n}\n';
+      var urlTest = {
+        imagePath: 'img/dot.jpg'
+      }
+
+      urlTest.base64 = fs.readFileSync(supportPath + '/' + urlTest.imagePath).toString('base64');
+      var content = 'body\n  font: 12px Helvetica, Arial, sans-serif\n  background: url("' + urlTest.imagePath + '")';
+      var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n  background: url("data:image/jpeg;base64,' + urlTest.base64 + '");\n}\n';
 
       plugin.compile(content, fileName, function(error, data) {
         expect(error).to.equal(null);
