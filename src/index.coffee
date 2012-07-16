@@ -11,7 +11,7 @@ module.exports = class StylusCompiler
       style: "@import 'nib'\n"
     chaplin:
       style: "@import 'nib'\n"
-  _dependencyRegExp: /@import ['"](.*)['"]/g
+  _dependencyRegExp: /^\s*@import ['"](.*)['"]/g
 
   constructor: (@config) ->
     null
