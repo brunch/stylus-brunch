@@ -1,3 +1,6 @@
+# stylus-brunch 1.4.1 (July 18, 2012)
+* Added relative paths support.
+
 # stylus-brunch 1.4.0 (July 17, 2012)
 * Fixed dependency parsing in comments.
 * Added support for `config.stylus.paths`.
