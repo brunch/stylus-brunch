@@ -28,24 +28,26 @@ module.exports = class StylusCompiler
     compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
-    re = @_dependencyRegExp
     parent = sysPath.dirname path
     dependencies = data
       .split('\n')
-      .map (line) ->
-        line.match(re)
-      .filter (match) ->
+      .map (line) =>
+        line.match(@_dependencyRegExp)
+      .filter (match) =>
         match?.length > 0
-      .map (match) ->
+      .map (match) =>
         match[1]
-      .filter (path) ->
+      .filter (path) =>
         !!path and path isnt 'nib'
-      .map (path) ->
+      .map (path) =>
         if sysPath.extname(path) isnt ".#{@extension}"
           path + ".#{@extension}"
         else
           path
-      .map (path) ->
-        sysPath.join parent, path
-    process.nextTick ->
+      .map (path) =>
+        if path.charAt(0) is '/'
+          sysPath.join @config.paths.root, path[1..]
+        else
+          sysPath.join parent, path
+    process.nextTick =>
       callback null, dependencies
