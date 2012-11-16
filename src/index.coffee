@@ -45,24 +45,6 @@ module.exports = class StylusCompiler
         callback(stylus(data).define('sprite', helper.fn))
     else 
       callback(stylus(data))    
-  
-  compileWithSprites: (data, path, callback) =>
-    sprite.stylus {path: @config.paths.assets + '/' + iconpath, httpPath : '../' + iconpath }, (err, helper) =>
-      compiler = stylus(data)
-        .set('compress', no)        
-        .set('firebug', !!@config.stylus?.firebug)
-        .include(sysPath.join @config.paths.root)
-        .include(sysPath.dirname path)
-        .use(nib())
-        .define('sprite', helper.fn)
-
-      if @config.stylus
-        defines = @config.stylus.defines ? {}
-        Object.keys(defines).forEach (name) ->
-          compiler.define name, defines[name]
-        @config.stylus.paths?.forEach (path) ->
-          compiler.include(path)
-      compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
     parent = sysPath.dirname path
