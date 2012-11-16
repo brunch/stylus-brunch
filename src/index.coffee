@@ -12,13 +12,41 @@ module.exports = class StylusCompiler
   _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
-    exec "convert --version", (error, stdout, stderr) =>
-      if error
-        console.error "You need to have convert (ImageMagick) on your system for spriting"
+    if @config.stylus?.spriting
+      @iconpath = @config.stylus?.icons or 'images/icons'
+      if not fs.existsSync(sysPath.join @config.paths.assets, @iconpath)
+         console.error "Please make sure that the icon path " + @iconpath + 'exits'
+      exec "convert --version", (error, stdout, stderr) =>
+        if error
+          console.error "You need to have convert (ImageMagick) on your system for spriting"
+    null
 
   compile: (data, path, callback) =>        
-    iconpath = @config.stylus?.icons or 'images/icons'
-    fs.mkdirSync(@config.paths.assets + '/' + iconpath) if not fs.existsSync(@config.paths.assets + '/' + iconpath)    
+    @getCompiler(data, (compiler) =>
+      compiler = compiler
+        .set('compress', no)
+        .set('firebug', !!@config.stylus?.firebug)
+        .include(sysPath.join @config.paths.root)
+        .include(sysPath.dirname path)
+        .use(nib())
+
+      if @config.stylus
+        defines = @config.stylus.defines ? {}
+        Object.keys(defines).forEach (name) ->
+          compiler.define name, defines[name]
+        @config.stylus.paths?.forEach (path) ->
+          compiler.include(path)
+      compiler.render(callback)
+    )
+
+  getCompiler: (data, callback) =>
+    if @config.stylus?.spriting
+      sprite.stylus {path: sysPath.join(@config.paths.assets, @iconpath), httpPath : '../' + @iconpath }, (err, helper) =>
+        callback(stylus(data).define('sprite', helper.fn))
+    else 
+      callback(stylus(data))    
+  
+  compileWithSprites: (data, path, callback) =>
     sprite.stylus {path: @config.paths.assets + '/' + iconpath, httpPath : '../' + iconpath }, (err, helper) =>
       compiler = stylus(data)
         .set('compress', no)        

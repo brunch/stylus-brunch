@@ -2,7 +2,13 @@
 Adds [Stylus](http://learnboost.github.com/stylus/) support to
 [brunch](http://brunch.io).
 
-Also includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins and [node-sprite](https://github.com/naltatis/node-sprite) for spriting, so make sure you habe imagemagick installed.
+Also includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins and [node-sprite](https://github.com/naltatis/node-sprite) for spriting.
+
+## Config
+To enable spriting add the following to your config.coffee and make sure you habe imagemagick installed
+	stylus:
+    	spriting: true
+    	iconPath: 'images/icons'	
 
 ## Usage
 Add `"stylus-brunch": "x.y.z"` to `package.json` of your brunch app.
