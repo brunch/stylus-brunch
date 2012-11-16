@@ -13,7 +13,7 @@ module.exports = class StylusCompiler
 
   constructor: (@config) ->
     if @config.stylus?.spriting
-      @iconpath = @config.stylus?.icons or 'images/icons'
+      @iconpath = @config.stylus?.iconPath or 'images/icons'
       if not fs.existsSync(sysPath.join @config.paths.assets, @iconpath)
          console.error "Please make sure that the icon path " + @iconpath + 'exits'
       exec "convert --version", (error, stdout, stderr) =>
