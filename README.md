@@ -6,9 +6,10 @@ Also includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins and
 
 ## Config
 To enable spriting add the following to your config.coffee and make sure you habe imagemagick installed
-	stylus:
-    	spriting: true
-    	iconPath: 'images/icons'	
+
+    stylus:
+        spriting: true
+        iconPath: 'images/icons'	
 
 ## Usage
 Add `"stylus-brunch": "x.y.z"` to `package.json` of your brunch app.
