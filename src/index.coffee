@@ -1,4 +1,6 @@
+{spawn, exec} = require 'child_process'
 nib = require 'nib'
+fs = require 'fs'
 stylus = require 'stylus'
 sysPath = require 'path'
 sprite = require 'node-sprite'
@@ -10,10 +12,13 @@ module.exports = class StylusCompiler
   _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
-    null
+    exec "convert --version", (error, stdout, stderr) =>
+      if error
+        console.error "You need to have convert (ImageMagick) on your system for spriting"
 
   compile: (data, path, callback) =>        
     iconpath = @config.stylus?.icons or 'images/icons'
+    fs.mkdirSync(@config.paths.assets + '/' + iconpath) if not fs.existsSync(@config.paths.assets + '/' + iconpath)    
     sprite.stylus {path: @config.paths.assets + '/' + iconpath, httpPath : '../' + iconpath }, (err, helper) =>
       compiler = stylus(data)
         .set('compress', no)        
