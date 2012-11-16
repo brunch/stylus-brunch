@@ -1,6 +1,7 @@
 nib = require 'nib'
 stylus = require 'stylus'
 sysPath = require 'path'
+sprite = require 'node-sprite'
 
 module.exports = class StylusCompiler
   brunchPlugin: yes
@@ -11,21 +12,24 @@ module.exports = class StylusCompiler
   constructor: (@config) ->
     null
 
-  compile: (data, path, callback) =>
-    compiler = stylus(data)
-      .set('compress', no)
-      .set('firebug', !!@config.stylus?.firebug)
-      .include(sysPath.join @config.paths.root)
-      .include(sysPath.dirname path)
-      .use(nib())
+  compile: (data, path, callback) =>        
+    iconpath = @config.stylus?.icons or 'images/icons'
+    sprite.stylus {path: @config.paths.assets + '/' + iconpath, httpPath : '../' + iconpath }, (err, helper) =>
+      compiler = stylus(data)
+        .set('compress', no)        
+        .set('firebug', !!@config.stylus?.firebug)
+        .include(sysPath.join @config.paths.root)
+        .include(sysPath.dirname path)
+        .use(nib())
+        .define('sprite', helper.fn)
 
-    if @config.stylus
-      defines = @config.stylus.defines ? {}
-      Object.keys(defines).forEach (name) ->
-        compiler.define name, defines[name]
-      @config.stylus.paths?.forEach (path) ->
-        compiler.include(path)
-    compiler.render(callback)
+      if @config.stylus
+        defines = @config.stylus.defines ? {}
+        Object.keys(defines).forEach (name) ->
+          compiler.define name, defines[name]
+        @config.stylus.paths?.forEach (path) ->
+          compiler.include(path)
+      compiler.render(callback)
 
   getDependencies: (data, path, callback) =>
     parent = sysPath.dirname path
