@@ -14,7 +14,7 @@ module.exports = class StylusCompiler
   constructor: (@config) ->
     if @config.stylus?.spriting
       @iconPath = @config.stylus?.iconPath ? sysPath.join 'images', 'icons'
-      @iconPathFull = sysPath.join @config.paths.assets, @iconpath
+      @iconPathFull = sysPath.join @config.paths.assets, @iconPath
       unless fs.existsSync(@iconPathFull)
          console.error "Please make sure that the icon path #{@iconpath} exits"
       exec 'convert --version', (error, stdout, stderr) =>
@@ -41,7 +41,13 @@ module.exports = class StylusCompiler
 
   getCompiler: (data, callback) =>
     if @config.stylus?.spriting
-      sprite.stylus {path: @iconPathFull, httpPath : '../' + @iconpath }, (err, helper) =>
+      options =
+        path: @config.stylus?.options?.path or @iconPathFull
+        retina: @config.stylus?.options?.retina or '-2px'
+        padding: @config.stylus.options?.padding or '2px'
+        httpPath: @config.stylus?.options?.httpPath or '../' + @iconPath
+
+      sprite.stylus options, (err, helper) =>
         callback(stylus(data).define('sprite', helper.fn))
     else 
       callback(stylus(data))    
