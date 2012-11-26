@@ -1,3 +1,7 @@
+# stylus-brunch 1.4.2 (November 26, 2012)
+* Added spriting support via node-sprite.
+* Updated stylus to 0.30 and nib to 0.8.
+
 # stylus-brunch 1.4.1 (July 18, 2012)
 * Added relative paths support.
 
