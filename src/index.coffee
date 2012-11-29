@@ -43,8 +43,8 @@ module.exports = class StylusCompiler
     if @config.stylus?.spriting
       options =
         path: @config.stylus?.options?.path or @iconPathFull
-        retina: @config.stylus?.options?.retina or '-2px'
-        padding: @config.stylus.options?.padding or '2px'
+        retina: @config.stylus?.options?.retina or '-2x'
+        padding: @config.stylus.options?.padding or 2
         httpPath: @config.stylus?.options?.httpPath or '../' + @iconPath
 
       sprite.stylus options, (err, helper) =>
