@@ -1,3 +1,6 @@
+# stylus-brunch 1.4.3 (January 13, 2012)
+* Fixed spriting
+
 # stylus-brunch 1.4.2 (November 26, 2012)
 * Added spriting support via node-sprite.
 * Updated stylus to 0.30 and nib to 0.8.
