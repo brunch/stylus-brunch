@@ -1,6 +1,6 @@
 {
   "name": "stylus-brunch",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Adds Stylus support to brunch.",
   "author": "Paul Miller (http://paulmillr.com/)",
   "homepage": "https://github.com/brunch/stylus-brunch",
@@ -12,16 +12,11 @@
   "scripts": {
     "prepublish": "node setup.js prepublish",
     "postpublish": "node setup.js postpublish",
-    "test": "node setup.js test",
-    "postinstall": "node setup.js postinstall"
-  },
-  "engines": {
-    "node": "~0.6.10 || 0.8 || 0.9"
+    "test": "node setup.js test"
   },
   "dependencies": {
-    "coffee-script": "1.4.0",
-    "stylus": "0.32.x",
-    "nib": "0.9.x",
+    "stylus": "~0.32.1",
+    "nib": "~0.9.0",
     "node-sprite": "0.1.1"
   },
   "devDependencies": {
