@@ -24,8 +24,8 @@ Path to sprites is configurable via `config.plugins.stylus.iconPath`
 ###Debugging
 Enable line number comments or FireStylus for Firebug debug messages (both are off by default)
 
-```
-config:
+```coffeescript
+config =
   plugins:
     stylus:
       linenos: yes
