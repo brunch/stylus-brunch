@@ -12,8 +12,12 @@ module.exports = class StylusCompiler
   _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
-    if @config.stylus?.spriting
-      @iconPath = @config.stylus?.iconPath ? sysPath.join 'images', 'icons'
+    @config.plugins ?= {}
+    if @config.stylus
+      console.warn "Warning: config.stylus is deprecated, move it to config.plugins.stylus"
+      @config.plugins.stylus ?= @config.stylus
+    if @config.plugins?.stylus?.spriting
+      @iconPath = @config.plugins.stylus.iconPath ? sysPath.join 'images', 'icons'
       @iconPathFull = sysPath.join @config.paths.assets, @iconPath
       unless fs.existsSync(@iconPathFull)
          console.error "Please make sure that the icon path #{@iconpath} exits"
@@ -27,26 +31,26 @@ module.exports = class StylusCompiler
       compiler = compiler
         .set('filename', path)
         .set('compress', no)
-        .set('firebug', !!@config.stylus?.firebug)
+        .set('firebug', !!@config.plugins?.stylus?.firebug)
         .include(sysPath.join @config.paths.root)
         .include(sysPath.dirname path)
         .use(nib())
 
-      if @config.stylus
-        defines = @config.stylus.defines ? {}
+      if @config.plugins?.stylus
+        defines = @config.plugins.stylus.defines ? {}
         Object.keys(defines).forEach (name) ->
           compiler.define name, defines[name]
-        @config.stylus.paths?.forEach (path) ->
+        @config.plugins.stylus.paths?.forEach (path) ->
           compiler.include(path)
       compiler.render(callback)
 
   getCompiler: (data, callback) =>
-    if @config.stylus?.spriting
+    if @config.plugins?.stylus?.spriting
       options =
-        path: @config.stylus?.options?.path or @iconPathFull
-        retina: @config.stylus?.options?.retina or '-2x'
-        padding: @config.stylus.options?.padding or 2
-        httpPath: @config.stylus?.options?.httpPath or '../' + @iconPath
+        path: @config.plugins.stylus.options?.path or @iconPathFull
+        retina: @config.plugins.stylus.options?.retina or '-2x'
+        padding: @config.plugins.stylus.options?.padding or 2
+        httpPath: @config.plugins.stylus.options?.httpPath or '../' + @iconPath
 
       sprite.stylus options, (err, helper) =>
         callback(stylus(data).define('sprite', helper.fn))
