@@ -32,6 +32,7 @@ module.exports = class StylusCompiler
         .set('filename', path)
         .set('compress', no)
         .set('firebug', !!@config.plugins?.stylus?.firebug)
+        .set('linenos', !!@config.plugins?.stylus?.linenos)
         .include(sysPath.join @config.paths.root)
         .include(sysPath.dirname path)
         .use(nib())
