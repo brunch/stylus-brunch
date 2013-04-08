@@ -25,6 +25,7 @@ module.exports = class StylusCompiler
   compile: (data, path, callback) =>        
     @getCompiler data, (compiler) =>
       compiler = compiler
+        .set('filename', path)
         .set('compress', no)
         .set('firebug', !!@config.stylus?.firebug)
         .include(sysPath.join @config.paths.root)
