@@ -12,8 +12,15 @@ module.exports = class StylusCompiler
   _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
-    if @config.stylus?.spriting
-      @iconPath = @config.stylus?.iconPath ? sysPath.join 'images', 'icons'
+    @config.plugins ?= {}
+    if @config.stylus
+      console.warn "Warning: config.stylus is deprecated, move it to config.plugins.stylus"
+      @config.plugins.stylus ?= @config.stylus
+
+    @cfg = @config.plugins.stylus ? {}
+
+    if @cfg.spriting
+      @iconPath = @cfg.iconPath ? sysPath.join 'images', 'icons'
       @iconPathFull = sysPath.join @config.paths.assets, @iconPath
       unless fs.existsSync(@iconPathFull)
          console.error "Please make sure that the icon path #{@iconpath} exits"
@@ -25,27 +32,30 @@ module.exports = class StylusCompiler
   compile: (data, path, callback) =>        
     @getCompiler data, (compiler) =>
       compiler = compiler
+        .set('filename', path)
         .set('compress', no)
-        .set('firebug', !!@config.stylus?.firebug)
+        .set('firebug', !!@cfg.firebug)
+        .set('linenos', !!@cfg.linenos)
         .include(sysPath.join @config.paths.root)
         .include(sysPath.dirname path)
         .use(nib())
 
-      if @config.stylus
-        defines = @config.stylus.defines ? {}
+      unless @cfg is {}
+        defines = @cfg.defines ? {}
         Object.keys(defines).forEach (name) ->
           compiler.define name, defines[name]
-        @config.stylus.paths?.forEach (path) ->
+        @cfg.paths?.forEach (path) ->
           compiler.include(path)
       compiler.render(callback)
 
   getCompiler: (data, callback) =>
-    if @config.stylus?.spriting
+    if @cfg.spriting
+      cfgopt = @cfg.options
       options =
-        path: @config.stylus?.options?.path or @iconPathFull
-        retina: @config.stylus?.options?.retina or '-2x'
-        padding: @config.stylus.options?.padding or 2
-        httpPath: @config.stylus?.options?.httpPath or '../' + @iconPath
+        path: cfgopt?.path or @iconPathFull
+        retina: cfgopt?.retina or '-2x'
+        padding: cfgopt?.padding or 2
+        httpPath: cfgopt?.httpPath or '../' + @iconPath
 
       sprite.stylus options, (err, helper) =>
         callback(stylus(data).define('sprite', helper.fn))
