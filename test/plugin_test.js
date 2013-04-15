@@ -1,5 +1,6 @@
 var fs = require('fs');
 var sysPath = require('path');
+var supportFolder = sysPath.join(sysPath.basename(__dirname), 'support');
 var supportPath = sysPath.resolve(__dirname, 'support');
 
 describe('Plugin', function() {
@@ -44,11 +45,11 @@ describe('Plugin', function() {
         done();
       });
     });
-    
+
     it('should compile and import from config.stylus.paths', function(done){
       var content = "@import 'path_test'\n";
       var expected = '.test {\n  color: #fff;\n}\n';
-      
+
       plugin.compile(content, fileName, function(error, data) {
         expect(error).to.equal(null);
         expect(data).to.equal(expected);
@@ -75,8 +76,35 @@ describe('Plugin', function() {
         sysPath.join('app', 'styles', 'valid3.styl'),
         sysPath.join('vendor', 'styles', 'valid4.styl')
       ];
-      
+
       plugin.getDependencies(content, fileName, function(error, dependencies) {
+        expect(error).not.to.be.ok;
+        expect(dependencies).to.eql(expected);
+        done();
+      });
+    });
+
+    it('should output recursive deps when ignored files', function(done){
+      var content = "@import '_recursive_test'\n";
+      var expected = [
+        sysPath.join(supportFolder, '_recursive_test.styl'),
+        sysPath.join(supportFolder, 'path_test.styl')
+      ];
+
+      plugin.getDependencies(content, supportFolder + '/test.styl', function(error, dependencies) {
+        expect(error).not.to.be.ok;
+        expect(dependencies).to.eql(expected);
+        done();
+      });
+    });
+
+    it('should not output recursive deps when not ignored files', function(done){
+      var content = "@import 'recursive_test'\n";
+      var expected = [
+        sysPath.join(supportFolder, 'recursive_test.styl')
+      ];
+
+      plugin.getDependencies(content, supportFolder + '/test.styl', function(error, dependencies) {
         expect(error).not.to.be.ok;
         expect(dependencies).to.eql(expected);
         done();
