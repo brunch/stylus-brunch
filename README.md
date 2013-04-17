@@ -14,11 +14,23 @@ Or, do manual install:
 * If you want to use git version of plugin, add
 `"stylus-brunch": "git+ssh://git@github.com:brunch/stylus-brunch.git"`.
 
-## Spriting
+## Options
+###Spriting
 You can enable sass-like spriting by node-sprint with config directive
-`config.stylus.spriting` (set it to true).
-Path to sprites is configurable via `config.stylus.iconPath`
+`config.plugins.stylus.spriting` (set it to true).
+Path to sprites is configurable via `config.plugins.stylus.iconPath`
 (default is `app/assets/images/icons`).
+
+###Debugging
+Enable line number comments or FireStylus for Firebug debug messages (both are off by default)
+
+```coffeescript
+config =
+  plugins:
+    stylus:
+      linenos: yes
+      firebug: yes      
+```
 
 ## License
 The MIT License (MIT)
