@@ -46,6 +46,15 @@ module.exports = class StylusCompiler
           compiler.define name, defines[name]
         @cfg.paths?.forEach (path) ->
           compiler.include(path)
+        @cfg.imports?.forEach (relativePath) ->
+          compiler.import(relativePath)
+        @cfg.plugins?.forEach (pluginName) ->
+          handler = (plugin) => compiler.use(plugin())
+          if define?.amd
+            require [pluginName], handler
+          else
+            handler require pluginName
+
       compiler.render(callback)
 
   getCompiler: (data, callback) =>
