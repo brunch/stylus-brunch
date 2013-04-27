@@ -17,7 +17,7 @@ module.exports = class StylusCompiler
       console.warn "Warning: config.stylus is deprecated, move it to config.plugins.stylus"
       @config.plugins.stylus ?= @config.stylus
 
-    @cfg = @config.plugins.stylus ? {}
+    @cfg = stylus
 
     if @cfg.spriting
       @iconPath = @cfg.iconPath ? sysPath.join 'images', 'icons'
