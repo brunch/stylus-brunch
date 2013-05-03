@@ -15,13 +15,36 @@ Or, do manual install:
 `"stylus-brunch": "git+ssh://git@github.com:brunch/stylus-brunch.git"`.
 
 ## Options
-###Spriting
+### Spriting
 You can enable sass-like spriting by node-sprint with config directive
 `config.plugins.stylus.spriting` (set it to true).
 Path to sprites is configurable via `config.plugins.stylus.iconPath`
 (default is `app/assets/images/icons`).
 
-###Debugging
+### Use Plugin Middleware
+You can include Stylus plugins with a config directive
+`config.plugins.stylus.plugins` (array) with paths to require the needed 
+plugins.  You will have to include your plugin dependencies in ```package.json```.
+
+```coffeescript
+config =
+  plugins:
+    stylus:
+      plugins: ['my-stylus-plugin']
+```
+
+### Manage imports
+You can import your modules or Stylus sheets with a config directive
+`config.plugins.stylus.imports` (array) with paths to your modules.
+
+```coffeescript
+config =
+  plugins:
+    stylus:
+      imports: ['']
+```
+
+### Debugging
 Enable line number comments or FireStylus for Firebug debug messages (both are off by default)
 
 ```coffeescript
