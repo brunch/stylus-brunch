@@ -12,12 +12,11 @@ module.exports = class StylusCompiler
   _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
-    @config.plugins ?= {}
     if @config.stylus
       console.warn "Warning: config.stylus is deprecated, move it to config.plugins.stylus"
-      @config.plugins.stylus ?= @config.stylus
-
-    @cfg = @config.plugins.stylus ? {}
+      @cfg = @config.stylus
+    else
+      @cfg = if @config.plugins?.stylus? then @config.plugins.stylus else {}
 
     if @cfg.spriting
       @iconPath = @cfg.iconPath ? sysPath.join 'images', 'icons'
