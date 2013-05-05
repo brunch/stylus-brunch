@@ -1,3 +1,6 @@
+# stylus-brunch 1.6.1 (5 May 2013)
+* Fixed compilation issues.
+
 # stylus-brunch 1.6.0 (18 April 2013)
 * Moved config from `config.stylus` to `config.plugins.stylus`.
 * Filename is now passed to compiler.
