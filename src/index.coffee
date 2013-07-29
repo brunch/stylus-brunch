@@ -4,12 +4,12 @@ fs = require 'fs'
 stylus = require 'stylus'
 sysPath = require 'path'
 sprite = require 'node-sprite'
+progeny = require 'progeny'
 
 module.exports = class StylusCompiler
   brunchPlugin: yes
   type: 'stylesheet'
   extension: 'styl'
-  _dependencyRegExp: /^ *@import ['"](.*)['"]/
 
   constructor: (@config) ->
     if @config.stylus
@@ -26,9 +26,10 @@ module.exports = class StylusCompiler
       exec 'convert --version', (error, stdout, stderr) =>
         if error
           console.error "You need to have convert (ImageMagick) on your system for spriting"
-    null
 
-  compile: (data, path, callback) =>        
+    @getDependencies = progeny rootPath: @config.paths.root
+
+  compile: (data, path, callback) =>
     @getCompiler data, (compiler) =>
       compiler = compiler
         .set('filename', path)
@@ -67,30 +68,5 @@ module.exports = class StylusCompiler
 
       sprite.stylus options, (err, helper) =>
         callback(stylus(data).define('sprite', helper.fn))
-    else 
-      callback(stylus(data))    
-
-  getDependencies: (data, path, callback) =>
-    parent = sysPath.dirname path
-    dependencies = data
-      .split('\n')
-      .map (line) =>
-        line.match(@_dependencyRegExp)
-      .filter (match) =>
-        match?.length > 0
-      .map (match) =>
-        match[1]
-      .filter (path) =>
-        !!path and path isnt 'nib'
-      .map (path) =>
-        if sysPath.extname(path) isnt ".#{@extension}"
-          path + ".#{@extension}"
-        else
-          path
-      .map (path) =>
-        if path.charAt(0) is '/'
-          sysPath.join @config.paths.root, path[1..]
-        else
-          sysPath.join parent, path
-    process.nextTick =>
-      callback null, dependencies
+    else
+      callback(stylus(data))

@@ -16,7 +16,8 @@
   "dependencies": {
     "stylus": "~0.32.1",
     "nib": "~0.9.0",
-    "node-sprite": "0.1.1"
+    "node-sprite": "0.1.1",
+    "progeny": "~0.1.1"
   },
   "devDependencies": {
     "mocha": "1.11.0",
