@@ -1,3 +1,6 @@
+# stylus-brunch 1.7.0 (28 August 2013)
+* New way of parsing dependent files.
+
 # stylus-brunch 1.6.1 (5 May 2013)
 * Fixed compilation issues.
 
