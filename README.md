@@ -33,7 +33,7 @@ config =
       plugins: ['my-stylus-plugin']
 ```
 
-### Manage imports
+### Options
 You can import your modules or Stylus sheets with a config directive
 `config.plugins.stylus.imports` (array) with paths to your modules.
 
@@ -44,6 +44,15 @@ config =
       imports: ['']
 ```
 
+Allow stylus files to include plain-css partials:
+
+```coffeescript
+config =
+  plugins:
+    stylus:
+      includeCss: true
+```
+
 ### Debugging
 Enable line number comments or FireStylus for Firebug debug messages (both are off by default)
 
@@ -51,8 +60,8 @@ Enable line number comments or FireStylus for Firebug debug messages (both are o
 config =
   plugins:
     stylus:
-      linenos: yes
-      firebug: yes      
+      linenos: true
+      firebug: true      
 ```
 
 ## License
