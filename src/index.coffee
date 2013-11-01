@@ -36,6 +36,7 @@ module.exports = class StylusCompiler
         .set('compress', no)
         .set('firebug', !!@cfg.firebug)
         .set('linenos', !!@cfg.linenos)
+        .set('include css', !!@cfg.includeCss)
         .include(sysPath.join @config.paths.root)
         .include(sysPath.dirname path)
         .use(nib())
