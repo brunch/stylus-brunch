@@ -60,7 +60,7 @@ describe('Plugin', function() {
   describe('getDependencies', function() {
     it('should output valid deps', function(done) {
       var content = "\
-@import _invalid\n\
+@import unquoted\n\
 @import 'valid1'\n\
 @import '__--valid2--'\n\
 @import \"./valid3.styl\"\n\
@@ -70,6 +70,7 @@ describe('Plugin', function() {
 ";
 
       var expected = [
+        sysPath.join('app', 'styles', 'unquoted.styl'),
         sysPath.join('app', 'styles', 'valid1.styl'),
         sysPath.join('app', 'styles', '__--valid2--.styl'),
         sysPath.join('app', 'styles', 'valid3.styl'),
