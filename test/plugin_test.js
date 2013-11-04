@@ -11,10 +11,12 @@ describe('Plugin', function() {
       paths: {
         root: ''
       },
-      stylus: {
-        paths: [supportPath],
-        defines: {
-          url: require('stylus').url()
+      plugins: {
+        stylus: {
+          paths: [supportPath],
+          defines: {
+            url: require('stylus').url()
+          }
         }
       }
     });
