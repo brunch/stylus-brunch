@@ -25,7 +25,7 @@ describe('Plugin', function() {
   });
 
   describe('#compile', function() {
-    it('should has #compile method', function() {
+    it('should have #compile method', function() {
       expect(plugin.compile).to.be.an.instanceof(Function);
     });
 
@@ -44,11 +44,11 @@ describe('Plugin', function() {
         done();
       });
     });
-    
+
     it('should compile and import from config.stylus.paths', function(done){
       var content = "@import 'path_test'\n";
       var expected = '.test {\n  color: #fff;\n}\n';
-      
+
       plugin.compile(content, fileName, function(error, data) {
         expect(error).to.equal(null);
         expect(data).to.equal(expected);
@@ -75,7 +75,7 @@ describe('Plugin', function() {
         sysPath.join('app', 'styles', 'valid3.styl'),
         sysPath.join('vendor', 'styles', 'valid4.styl')
       ];
-      
+
       plugin.getDependencies(content, fileName, function(error, dependencies) {
         expect(error).not.to.be.ok;
         expect(dependencies).to.eql(expected);
