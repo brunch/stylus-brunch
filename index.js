@@ -48,13 +48,13 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
     }
     if (isArray(imports)) {
       imports.forEach(function(relativePath) {
-        compiler["import"](relativePath);
+        compiler['import'](relativePath);
       });
     }
     if (isArray(plugins)) {
       var handler = function (plugin) {
         compiler.use(plugin());
-      }
+      };
       plugins.forEach(function(pluginName) {
         if (define && define.amd) {
           require([pluginName], handler);
