@@ -1,3 +1,7 @@
+# stylus-brunch 1.8.0 (26 December 2013)
+* Add includeCss option
+* Remove spriting features
+
 # stylus-brunch 1.7.0 (28 August 2013)
 * New way of parsing dependent files.
 
