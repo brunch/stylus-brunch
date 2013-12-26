@@ -1,6 +1,8 @@
+var expect = require('chai').expect;
+var Plugin = require('./');
 var fs = require('fs');
 var sysPath = require('path');
-var supportPath = sysPath.resolve(__dirname, 'support');
+var fixturesPath = sysPath.resolve(__dirname, 'fixtures');
 
 describe('Plugin', function() {
   var plugin;
@@ -13,7 +15,7 @@ describe('Plugin', function() {
       },
       plugins: {
         stylus: {
-          paths: [supportPath],
+          paths: [fixturesPath],
           defines: {
             url: require('stylus').url()
           }
@@ -33,10 +35,10 @@ describe('Plugin', function() {
 
     it('should compile and produce valid result', function(done) {
       var urlTest = {
-        imagePath: 'img/dot.jpg'
+        imagePath: './dot.jpg'
       }
 
-      urlTest.base64 = fs.readFileSync(supportPath + '/' + urlTest.imagePath).toString('base64');
+      urlTest.base64 = fs.readFileSync(fixturesPath + '/' + urlTest.imagePath).toString('base64');
       var content = 'body\n  font: 12px Helvetica, Arial, sans-serif\n  background: url("' + urlTest.imagePath + '")';
       var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n  background: url("data:image/jpeg;base64,' + urlTest.base64 + '");\n}\n';
 
