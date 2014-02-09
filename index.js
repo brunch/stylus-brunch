@@ -56,7 +56,7 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
         compiler.use(plugin());
       };
       plugins.forEach(function(pluginName) {
-        if (define && define.amd) {
+        if ('undefined' != typeof define && define.amd) {
           require([pluginName], handler);
         } else {
           handler(require(pluginName));
