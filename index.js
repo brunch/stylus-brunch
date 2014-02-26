@@ -5,10 +5,6 @@ var stylus = require('stylus');
 var nib = require('nib');
 var progeny = require('progeny');
 
-function isArray (obj) {
-  return toString.call(obj) === '[object Array]';
-}
-
 function StylusCompiler(cfg) {
   if (cfg == null) cfg = {};
   this.rootPath = cfg.paths.root;
@@ -41,22 +37,22 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
     Object.keys(defines).forEach(function(name) {
       compiler.define(name, defines[name]);
     });
-    if (isArray(paths)) {
+    if (Array.isArray(paths)) {
       paths.forEach(function(path) {
         compiler.include(path);
       });
     }
-    if (isArray(imports)) {
+    if (Array.isArray(imports)) {
       imports.forEach(function(relativePath) {
         compiler['import'](relativePath);
       });
     }
-    if (isArray(plugins)) {
-      var handler = function (plugin) {
+    if (Array.isArray(plugins)) {
+      var handler = function(plugin) {
         compiler.use(plugin());
       };
       plugins.forEach(function(pluginName) {
-        if ('undefined' != typeof define && define.amd) {
+        if (typeof define !== 'undefined' && define.amd) {
           require([pluginName], handler);
         } else {
           handler(require(pluginName));
