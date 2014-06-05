@@ -14,7 +14,7 @@
   "dependencies": {
     "stylus": "0.x",
     "nib": "~1.0.0",
-    "progeny": "~0.1.1"
+    "progeny": "~0.2.1"
   },
   "devDependencies": {
     "mocha": "1.11.0",
