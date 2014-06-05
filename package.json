@@ -12,7 +12,7 @@
     "test": "node_modules/.bin/mocha"
   },
   "dependencies": {
-    "stylus": "<= 0.43.1",
+    "stylus": "0.x",
     "nib": "~1.0.0",
     "progeny": "~0.1.1"
   },
