@@ -1,3 +1,6 @@
+# stylus-brunch 1.8.1 (5 June 2014)
+* Update progeny version to better handle `@import 'nib'` statements
+
 # stylus-brunch 1.8.0 (26 December 2013)
 * Add includeCss option
 * Remove spriting features
