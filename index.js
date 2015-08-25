@@ -10,7 +10,8 @@ function StylusCompiler(cfg) {
   this.rootPath = cfg.paths.root;
   this.config = (cfg.plugins && cfg.plugins.stylus) || {};
   this.getDependencies = progeny({
-    rootPath: this.rootPath
+    rootPath: this.rootPath,
+    reverseArgs: true
   });
 }
 
