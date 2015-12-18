@@ -4,6 +4,7 @@ var sysPath = require('path');
 var stylus = require('stylus');
 var nib = require('nib');
 var progeny = require('progeny');
+var poststylus = require('poststylus');
 
 function StylusCompiler(cfg) {
   if (cfg == null) cfg = {};
@@ -28,6 +29,7 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
     .set('include css', !!cfg.includeCss)
     .include(sysPath.join(this.rootPath))
     .include(sysPath.dirname(path))
+    .use(poststylus('lost'))
     .use(nib());
   if (cfg !== {}) {
     var defines = cfg.defines || {};
@@ -48,17 +50,14 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
       });
     }
     if (Array.isArray(plugins)) {
-      var handler = function(plugin,parameter) {
-        compiler.use(plugin(parameter));
+      var handler = function(plugin) {
+        compiler.use(plugin());
       };
       plugins.forEach(function(pluginName) {
-        var pluginParameter = pluginName.indexOf('(') !== -1 ? pluginName.substr(pluginName.indexOf('(')) : undefined;
-        pluginParameter = pluginParameter.substring(2, pluginParameter.length - 2);
-        pluginName = pluginName.indexOf('(') !== -1 ? pluginName.substr(0, pluginName.indexOf('(')) : pluginName;
         if (typeof define !== 'undefined' && define.amd) {
           require([pluginName], handler);
         } else {
-          handler(require(pluginName),pluginParameter);
+          handler(require(pluginName));
         }
       });
     }
