@@ -48,14 +48,17 @@ StylusCompiler.prototype.compile = function(data, path, callback) {
       });
     }
     if (Array.isArray(plugins)) {
-      var handler = function(plugin) {
-        compiler.use(plugin());
+      var handler = function(plugin,parameter) {
+        compiler.use(plugin(parameter));
       };
       plugins.forEach(function(pluginName) {
+        var pluginParameter = pluginName.indexOf('(') !== -1 ? pluginName.substr(pluginName.indexOf('(')) : undefined;
+        pluginParameter = pluginParameter.substring(2, pluginParameter.length - 2);
+        pluginName = pluginName.indexOf('(') !== -1 ? pluginName.substr(0, pluginName.indexOf('(')) : pluginName;
         if (typeof define !== 'undefined' && define.amd) {
           require([pluginName], handler);
         } else {
-          handler(require(pluginName));
+          handler(require(pluginName),pluginParameter);
         }
       });
     }
