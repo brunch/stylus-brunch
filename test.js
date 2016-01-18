@@ -42,22 +42,20 @@ describe('Plugin', function() {
       var content = 'body\n  font: 12px Helvetica, Arial, sans-serif\n  background: url("' + urlTest.imagePath + '")';
       var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n  background: url("data:image/jpeg;base64,' + urlTest.base64 + '");\n}\n';
 
-      plugin.compile(content, fileName, function(error, data) {
-        expect(error).to.equal(null);
+      plugin.compile({data: content, path: fileName}).then(data => {
         expect(data).to.equal(expected)
         done();
-      });
+      }, error => expect(error).to.equal(null));
     });
 
     it('should compile and import from config.stylus.paths', function(done){
       var content = "@import 'path_test'\n";
       var expected = '.test {\n  color: #fff;\n}\n';
 
-      plugin.compile(content, fileName, function(error, data) {
-        expect(error).to.equal(null);
+      plugin.compile({data: content, path: fileName}).then(data => {
         expect(data).to.equal(expected);
         done();
-      });
+      }, error => expect(error).to.equal(null));
     });
   });
 

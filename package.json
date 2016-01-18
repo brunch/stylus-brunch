@@ -9,7 +9,7 @@
     "url": "git@github.com:brunch/stylus-brunch.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha"
+    "test": "node_modules/.bin/eslint index.js && node_modules/.bin/mocha"
   },
   "dependencies": {
     "stylus": "0.x",
@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "mocha": "1.11.0",
-    "chai": "1.7.0"
+    "chai": "1.7.0",
+    "eslint": "^1.10.3"
   }
 }
