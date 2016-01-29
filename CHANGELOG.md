@@ -1,3 +1,6 @@
+# stylus-brunch 2.0.0 (Jan 29, 2016)
+* Updated source code & API. The plugin would now only work with Brunch 2.2 and higher.
+
 # stylus-brunch 1.8.1 (5 June 2014)
 * Update progeny version to better handle `@import 'nib'` statements
 
