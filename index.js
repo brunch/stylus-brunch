@@ -5,6 +5,19 @@ const stylus = require('stylus');
 const nib = require('nib');
 const progeny = require('progeny');
 
+const postcss = require('postcss');
+const postcssModules = require('postcss-modules');
+
+const cssModulify = (path, data, map) => {
+  let json = {};
+  const getJSON = (_, _json) => json = _json;
+
+  return postcss([postcssModules({getJSON})]).process(data, {from: path, map}).then(x => {
+    const exports = 'module.exports = ' + JSON.stringify(json) + ';';
+    return { data: x.css, map: x.map, exports };
+  });
+};
+
 class StylusCompiler {
   constructor(cfg) {
     if (cfg == null) cfg = {};
@@ -57,7 +70,12 @@ class StylusCompiler {
     return new Promise((resolve, reject) => {
       compiler.render((error, data) => {
         if (error) return reject(error);
-        resolve(data);
+
+        if (this.config.cssModules) {
+          cssModulify(path, data).then(resolve, reject);
+        } else {
+          resolve({data});
+        }
       });
     });
   }
