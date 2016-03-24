@@ -43,7 +43,7 @@ describe('Plugin', function() {
       var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n  background: url("data:image/jpeg;base64,' + urlTest.base64 + '");\n}\n';
 
       plugin.compile({data: content, path: fileName}).then(data => {
-        expect(data).to.equal(expected)
+        expect(data.data).to.equal(expected)
         done();
       }, error => expect(error).to.equal(null));
     });
@@ -53,7 +53,7 @@ describe('Plugin', function() {
       var expected = '.test {\n  color: #fff;\n}\n';
 
       plugin.compile({data: content, path: fileName}).then(data => {
-        expect(data).to.equal(expected);
+        expect(data.data).to.equal(expected);
         done();
       }, error => expect(error).to.equal(null));
     });
