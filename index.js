@@ -24,6 +24,9 @@ class StylusCompiler {
     this.rootPath = cfg.paths.root;
     this.config = cfg.plugins && cfg.plugins.stylus || {};
     this.getDependencies = progeny({rootPath: this.rootPath});
+    this.modules = this.config.modules || this.config.cssModules;
+    delete this.config.modules;
+    delete this.config.cssModules;
   }
 
   compile(params) {
@@ -71,7 +74,7 @@ class StylusCompiler {
       compiler.render((error, data) => {
         if (error) return reject(error);
 
-        if (this.config.cssModules) {
+        if (this.modules) {
           cssModulify(path, data).then(resolve, reject);
         } else {
           resolve({data});

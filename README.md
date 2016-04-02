@@ -17,7 +17,7 @@ Or, do manual install:
 ## Options
 ### Use Plugin Middleware
 You can include Stylus plugins with a config directive
-`config.plugins.stylus.plugins` (array) with paths to require the needed 
+`config.plugins.stylus.plugins` (array) with paths to require the needed
 plugins.  You will have to include your plugin dependencies in ```package.json```.
 
 ```coffeescript
@@ -66,7 +66,7 @@ module.exports = {
   // ...
   plugins: {
     stylus: {
-      cssModules: true
+      modules: true
     }
   }
 };
