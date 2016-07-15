@@ -6,7 +6,7 @@ var fixturesPath = sysPath.resolve(__dirname, 'fixtures');
 
 describe('Plugin', function() {
   var plugin;
-  var fileName = 'app/styles/style.styl';
+  var path = 'app/styles/style.styl';
 
   beforeEach(function() {
     plugin = new Plugin({
@@ -39,20 +39,20 @@ describe('Plugin', function() {
       }
 
       urlTest.base64 = fs.readFileSync(fixturesPath + '/' + urlTest.imagePath).toString('base64');
-      var content = 'body\n  font: 12px Helvetica, Arial, sans-serif\n  background: url("' + urlTest.imagePath + '")';
+      var data = 'body\n  font: 12px Helvetica, Arial, sans-serif\n  background: url("' + urlTest.imagePath + '")';
       var expected = 'body {\n  font: 12px Helvetica, Arial, sans-serif;\n  background: url("data:image/jpeg;base64,' + urlTest.base64 + '");\n}\n';
 
-      plugin.compile({data: content, path: fileName}).then(data => {
-        expect(data.data).to.equal(expected)
+      plugin.compile({data, path}).then(data => {
+        expect(data.data).to.equal(expected);
         done();
       }, error => expect(error).to.equal(null));
     });
 
     it('should compile and import from config.stylus.paths', function(done){
-      var content = "@import 'path_test'\n";
+      var data = "@import 'path_test'\n";
       var expected = '.test {\n  color: #fff;\n}\n';
 
-      plugin.compile({data: content, path: fileName}).then(data => {
+      plugin.compile({data, path}).then(data => {
         expect(data.data).to.equal(expected);
         done();
       }, error => expect(error).to.equal(null));
@@ -60,16 +60,16 @@ describe('Plugin', function() {
   });
 
   describe('getDependencies', function() {
-    it('should output valid deps', function(done) {
-      var content = "\
-@import unquoted\n\
-@import 'valid1'\n\
-@import '__--valid2--'\n\
-@import \"./valid3.styl\"\n\
-@import '../../vendor/styles/valid4'\n\
-@import 'nib'\n\
-// @import 'commented'\n\
-";
+    it('should output valid deps', function() {
+      var data = `
+        @import unquoted
+        @import 'valid1'
+        @import '__--valid2--'
+        @import "./valid3.styl"
+        @import '../../vendor/styles/valid4'
+        @import 'nib'
+        // @import 'commented'
+      `;
 
       var expected = [
         sysPath.join('app', 'styles', 'unquoted.styl'),
@@ -79,10 +79,8 @@ describe('Plugin', function() {
         sysPath.join('vendor', 'styles', 'valid4.styl')
       ];
 
-      plugin.getDependencies(content, fileName, function(error, dependencies) {
-        expect(error).not.to.be.ok;
-        expect(dependencies).to.eql(expected);
-        done();
+      return plugin.getDependencies({data, path}).then(deps => {
+        expect(deps).to.deep.equal(expected);
       });
     });
   });
