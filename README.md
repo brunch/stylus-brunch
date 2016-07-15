@@ -2,7 +2,7 @@
 Adds [Stylus](http://learnboost.github.com/stylus/) support to
 [brunch](http://brunch.io).
 
-Also includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins.
+The plugin includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins.
 
 ## Usage
 Install the plugin via npm with `npm install --save stylus-brunch`.
