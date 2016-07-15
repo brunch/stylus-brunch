@@ -13,7 +13,7 @@ const cssModulify = (path, data, map) => {
   const getJSON = (_, _json) => json = _json;
 
   return postcss([postcssModules({getJSON})]).process(data, {from: path, map}).then(x => {
-    const exports = 'module.exports = ' + JSON.stringify(json) + ';';
+    const exports = `module.exports = ${JSON.stringify(json)};`;
     return { data: x.css, map: x.map, exports };
   });
 };
@@ -23,17 +23,29 @@ class StylusCompiler {
     if (cfg == null) cfg = {};
     this.rootPath = cfg.paths.root;
     this.config = cfg.plugins && cfg.plugins.stylus || {};
-    this.getDependencies = progeny({rootPath: this.rootPath});
     this.modules = this.config.modules || this.config.cssModules;
     delete this.config.modules;
     delete this.config.cssModules;
+    this._progeny = progeny({rootPath: this.rootPath});
   }
 
-  compile(params) {
-    const data = params.data;
-    const path = params.path;
+  getDependencies(file) {
+    const data = file.data;
+    const path = file.path;
 
-    const cfg = this.config;
+    return new Promise((resolve, reject) => {
+      this._progeny(path, data, (error, deps) => {
+        if (error) reject(error);
+        else resolve(deps);
+      });
+    });
+  }
+
+  compile(file) {
+    const data = file.data;
+    const path = file.path;
+
+    const cfg = this.config || {};
     const compiler = stylus(data)
       .set('filename', path)
       .set('compress', false)
@@ -44,30 +56,26 @@ class StylusCompiler {
       .include(sysPath.dirname(path))
       .use(nib());
 
-    if (cfg !== {}) {
-      const defines = cfg.defines || {};
-      const paths = cfg.paths;
-      const imports = cfg.imports;
-      const plugins = cfg.plugins;
+    const defines = cfg.defines || {};
+    const paths = cfg.paths;
+    const imports = cfg.imports;
+    const plugins = cfg.plugins;
 
-      Object.keys(defines).forEach(name => compiler.define(name, defines[name]));
+    Object.keys(defines).forEach(name => {
+      compiler.define(name, defines[name]);
+    });
 
-      if (Array.isArray(paths)) {
-        paths.forEach(path => compiler.include(path));
-      }
-      if (Array.isArray(imports)) {
-        imports.forEach(relativePath => compiler['import'](relativePath));
-      }
-      if (Array.isArray(plugins)) {
-        const handler = plugin => compiler.use(plugin());
-        plugins.forEach(pluginName => {
-          if (typeof define !== 'undefined' && define.amd) { //eslint-disable-line no-undef
-            require([pluginName], handler);
-          } else {
-            handler(require(pluginName));
-          }
-        });
-      }
+    if (Array.isArray(paths)) {
+      paths.forEach(path => compiler.include(path));
+    }
+    if (Array.isArray(imports)) {
+      imports.forEach(relativePath => compiler.import(relativePath));
+    }
+    if (Array.isArray(plugins)) {
+      const handler = plugin => compiler.use(plugin());
+      plugins.forEach(pluginName => {
+        handler(require(pluginName));
+      });
     }
 
     return new Promise((resolve, reject) => {

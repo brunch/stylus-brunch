@@ -1,6 +1,6 @@
 {
   "name": "stylus-brunch",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Adds Stylus support to brunch.",
   "author": "Paul Miller (http://paulmillr.com/)",
   "homepage": "https://github.com/brunch/stylus-brunch",
@@ -9,18 +9,19 @@
     "url": "git@github.com:brunch/stylus-brunch.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/eslint index.js && node_modules/.bin/mocha"
+    "test": "eslint index.js && mocha"
   },
+  "license": "MIT",
   "dependencies": {
-    "stylus": "0.x",
-    "nib": "~1.0.0",
-    "progeny": "~0.2.1",
+    "stylus": "~0.54.5",
+    "nib": "~1.1.0",
+    "progeny": "~0.7.0",
     "postcss": "~5.0.19",
     "postcss-modules": "~0.4.0"
   },
   "devDependencies": {
-    "mocha": "1.11.0",
-    "chai": "1.7.0",
-    "eslint": "^2.1.0"
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0",
+    "eslint": "^3.0.1"
   }
 }
