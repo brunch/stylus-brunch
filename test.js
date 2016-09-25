@@ -98,3 +98,52 @@ describe('Plugin', function() {
     });
   });
 });
+
+
+describe('Plugin Import Module', function() {
+  const path = 'fixtures/app/styles/style.styl';
+  const pluginPath = sysPath.resolve(__dirname, 'fixtures/plugin-import-module/index.js');
+  let plugin;
+
+  it('Add plugin import should add fn', () => {
+    //import add plugin
+    plugin = new Plugin({
+      paths: {
+        root: ''
+      },
+      plugins: {
+        stylus: {
+          plugins: [[pluginPath, 'add']]
+        }
+      }
+    });
+
+    const data = `body\n  top: add(1, 3)`;
+    const expected = `body {\n  top: 4;\n}\n`;
+
+    return plugin.compile({data, path}).then(result => {
+      expect(result.data).to.equal(expected);
+    });
+  });
+
+  it('Sub plugin import should sub fn', () => {
+    //import add plugin
+    plugin = new Plugin({
+      paths: {
+        root: ''
+      },
+      plugins: {
+        stylus: {
+          plugins: [[pluginPath, 'sub']]
+        }
+      }
+    });
+
+    const data = `body\n  top: sub(3, 2)`;
+    const expected = `body {\n  top: 1;\n}\n`;
+
+    return plugin.compile({data, path}).then(result => {
+      expect(result.data).to.equal(expected);
+    });
+  });
+});
