@@ -71,7 +71,12 @@ class StylusCompiler {
     if (Array.isArray(plugins)) {
       const handler = plugin => compiler.use(plugin());
       plugins.forEach(pluginName => {
-        handler(require(pluginName));
+        if (Array.isArray(pluginName)) {
+          const pluginModule = require(pluginName[0]);
+          handler(pluginModule[pluginName[1]]);
+        } else {
+          handler(require(pluginName));
+        }
       });
     }
 

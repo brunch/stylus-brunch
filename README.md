@@ -27,6 +27,16 @@ config =
       plugins: ['my-stylus-plugin']
 ```
 
+If the plugin is module based you can import a spcific member as a subarray.
+
+```coffeescript
+config =
+  plugins:
+    stylus:
+      plugins: ['my-stylus-plugin', ['my-module-plugin', 'member']]
+```
+
+
 ### Options
 You can import your modules or Stylus sheets with a config directive
 `config.plugins.stylus.imports` (array) with paths to your modules.
