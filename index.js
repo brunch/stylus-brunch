@@ -29,9 +29,9 @@ class StylusCompiler {
     this._progeny = progeny({rootPath: this.rootPath});
   }
 
-  getDependencies(data, path) {
+  getDependencies(file) {
     return new Promise((resolve, reject) => {
-      this._progeny(path, data, (error, deps) => {
+      this._progeny(path, file.data, (error, deps) => {
         if (error) reject(error);
         else resolve(deps);
       });
