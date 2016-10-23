@@ -31,7 +31,7 @@ class StylusCompiler {
 
   getDependencies(file) {
     return new Promise((resolve, reject) => {
-      this._progeny(path, file.data, (error, deps) => {
+      this._progeny(file.path, file.data, (error, deps) => {
         if (error) reject(error);
         else resolve(deps);
       });
