@@ -7,7 +7,7 @@ The plugin includes [nib](http://visionmedia.github.com/nib/) cross-browser mixi
 
 ## Usage
 
-Install the plugin via npm with `npm install --save stylus-brunch`.
+Install the plugin via npm with `npm install --save-dev stylus-brunch`.
 
 Or, do manual install:
 
