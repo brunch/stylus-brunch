@@ -10,11 +10,16 @@ const postcssModules = require('postcss-modules');
 
 const cssModulify = (path, data, map) => {
   let json = {};
+  // eslint-disable-next-line
   const getJSON = (_, _json) => json = _json;
 
   return postcss([postcssModules({getJSON})]).process(data, {from: path, map}).then(x => {
     const exports = `module.exports = ${JSON.stringify(json)};`;
-    return { data: x.css, map: x.map, exports };
+    return {
+      exports,
+      data: x.css,
+      map: x.map,
+    };
   });
 };
 
