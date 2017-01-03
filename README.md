@@ -1,10 +1,12 @@
-## stylus-brunch
+# stylus-brunch
+
 Adds [Stylus](http://learnboost.github.com/stylus/) support to
 [brunch](http://brunch.io).
 
 The plugin includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins.
 
 ## Usage
+
 Install the plugin via npm with `npm install --save stylus-brunch`.
 
 Or, do manual install:
@@ -15,63 +17,87 @@ Or, do manual install:
 `"stylus-brunch": "git+ssh://git@github.com:brunch/stylus-brunch.git"`.
 
 ## Options
+
 ### Use Plugin Middleware
+
 You can include Stylus plugins with a config directive
 `config.plugins.stylus.plugins` (array) with paths to require the needed
-plugins.  You will have to include your plugin dependencies in ```package.json```.
+plugins.  You will have to include your plugin dependencies in `package.json`.
 
-```coffeescript
-config =
-  plugins:
-    stylus:
+```js
+module.exports = {
+  // ...
+  plugins: {
+    stylus: {
       plugins: ['my-stylus-plugin']
+    }
+  }
+};
 ```
 
-If the plugin is module based you can import a spcific member as a subarray.
+If the plugin is module based you can import a specific member as a subarray.
 
-```coffeescript
-config =
-  plugins:
-    stylus:
+```js
+moduls.exports = {
+  // ...
+  plugins: {
+    stylus: {
       plugins: ['my-stylus-plugin', ['my-module-plugin', 'member']]
+    }
+  }
+};
 ```
-
 
 ### Options
+
 You can import your modules or Stylus sheets with a config directive
 `config.plugins.stylus.imports` (array) with paths to your modules.
 
-```coffeescript
-config =
-  plugins:
-    stylus:
+```js
+moduls.exports = {
+  // ...
+  plugins: {
+    stylus: {
       imports: ['']
+    }
+  }
+};
 ```
 
 Allow stylus files to include plain-css partials:
 
-```coffeescript
-config =
-  plugins:
-    stylus:
+```js
+moduls.exports = {
+  // ...
+  plugins: {
+    stylus: {
       includeCss: true
+    }
+  }
+};
 ```
 
 ### Debugging
+
 Enable line number comments or FireStylus for Firebug debug messages (both are off by default)
 
-```coffeescript
-config =
-  plugins:
-    stylus:
-      linenos: true
+```js
+moduls.exports = {
+  // ...
+  plugins: {
+    stylus: {
+      linenos: true,
       firebug: true
+    }
+  }
+};
 ```
 
 ### CSS Modules
+
 Starting Brunch `<unreleased>`, you can use CSS Modules with stylus-brunch. To enable it, change your config to:
 
-```javascript
+```js
 module.exports = {
   // ...
   plugins: {
@@ -91,7 +117,7 @@ Then, author your styles like you normally would:
 
 And reference CSS class names by requiring the specific style into your javascript:
 
-```javascript
+```js
 var style = require('./title.styl');
 
 <h1 className={style.title}>Yo</h1>
@@ -99,12 +125,11 @@ var style = require('./title.styl');
 
 Note: enabling `cssModules` does so for every stylesheet in your project, so it's all-or-nothing. Even the files you don't require will be transformed into CSS modules (aka will have obfuscated class names, like turn `.title` into `._title_fdphn_1`).
 
-
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2012-2013 Paul Miller (http://paulmillr.com)
+Copyright (c) 2012-2017 Paul Miller (http://paulmillr.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
