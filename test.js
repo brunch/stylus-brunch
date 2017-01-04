@@ -1,27 +1,29 @@
+/* eslint no-undef: 0 */
 'use strict';
+
 const expect = require('chai').expect;
 const Plugin = require('./');
 const fs = require('fs');
 const sysPath = require('path');
 const fixturesPath = sysPath.resolve(__dirname, 'fixtures');
 
-describe('Plugin', function() {
+describe('Plugin', () => {
   let plugin;
   const path = 'fixtures/app/styles/style.styl';
 
-  beforeEach(function() {
+  beforeEach(() => {
     plugin = new Plugin({
       paths: {
-        root: ''
+        root: '',
       },
       plugins: {
         stylus: {
           paths: [fixturesPath],
           defines: {
-            url: require('stylus').url()
-          }
-        }
-      }
+            url: require('stylus').url(),
+          },
+        },
+      },
     });
   });
 
@@ -73,7 +75,7 @@ describe('Plugin', function() {
         sysPath.join('fixtures', 'app', 'styles', 'valid1.styl'),
         sysPath.join('fixtures', 'app', 'styles', '__--valid2--.styl'),
         sysPath.join('fixtures', 'app', 'styles', 'valid3.styl'),
-        sysPath.join('fixtures', 'vendor', 'styles', 'valid4.styl')
+        sysPath.join('fixtures', 'vendor', 'styles', 'valid4.styl'),
       ];
 
       return plugin.getDependencies({data, path}).then(deps => {
@@ -100,22 +102,22 @@ describe('Plugin', function() {
 });
 
 
-describe('Plugin Import Module', function() {
+describe('Plugin Import Module', () => {
   const path = 'fixtures/app/styles/style.styl';
   const pluginPath = sysPath.resolve(__dirname, 'fixtures/plugin-import-module/index.js');
   let plugin;
 
   it('Add plugin import should add fn', () => {
-    //import add plugin
+    // import add plugin
     plugin = new Plugin({
       paths: {
-        root: ''
+        root: '',
       },
       plugins: {
         stylus: {
-          plugins: [[pluginPath, 'add']]
-        }
-      }
+          plugins: [[pluginPath, 'add']],
+        },
+      },
     });
 
     const data = `body\n  top: add(1, 3)`;
@@ -127,16 +129,16 @@ describe('Plugin Import Module', function() {
   });
 
   it('Sub plugin import should sub fn', () => {
-    //import add plugin
+    // import add plugin
     plugin = new Plugin({
       paths: {
-        root: ''
+        root: '',
       },
       plugins: {
         stylus: {
-          plugins: [[pluginPath, 'sub']]
-        }
-      }
+          plugins: [[pluginPath, 'sub']],
+        },
+      },
     });
 
     const data = `body\n  top: sub(3, 2)`;
