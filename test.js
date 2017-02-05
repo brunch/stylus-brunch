@@ -149,3 +149,27 @@ describe('Plugin Import Module', () => {
     });
   });
 });
+
+
+describe('Plugin as a function', () => {
+  const path = 'fixtures/app/styles/style.styl';
+  it('Compile results and should be prefixed', () => {
+    // import add plugin
+    const plugin = new Plugin({
+      paths: {
+        root: '',
+      },
+      plugins: {
+        stylus: {
+          plugins: [require('autoprefixer-stylus')({browsers: ['last 99 versions']})],
+        },
+      },
+    });
+
+    const data = `body\n  display: flex`;
+    const expected = `body {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n`;
+    return plugin.compile({data, path}).then(result => {
+      expect(result.data).to.equal(expected);
+    });
+  });
+});
