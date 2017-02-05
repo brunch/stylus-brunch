@@ -48,6 +48,20 @@ moduls.exports = {
 };
 ```
 
+Alternatively, you can pass a function.
+
+```js
+moduls.exports = {
+  // ...
+  plugins: {
+    stylus: {
+      plugins: [require('autoprefixer-stylus')({browsers: ['last 3 versions']})]
+    }
+  }
+};
+```
+
+
 ### Options
 
 You can import your modules or Stylus sheets with a config directive
