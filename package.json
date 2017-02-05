@@ -24,7 +24,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.0.1",
     "eslint-config-brunch": "brunch/eslint-config-brunch",
-    "autoprefixer-stylus ": "0.13.0"
+    "autoprefixer-stylus": "0.13.0"
   },
   "eslintConfig": {
     "extends": "brunch"
