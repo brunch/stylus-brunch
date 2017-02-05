@@ -76,7 +76,7 @@ class StylusCompiler {
     if (Array.isArray(plugins)) {
       const handler = plugin => compiler.use(plugin());
       plugins.forEach(pluginName => {
-        if (Object.prototype.toString.call(pluginName) === '[object Function]') {
+        if (typeof pluginName === 'function') {
           compiler.use(pluginName);
         } else if (Array.isArray(pluginName)) {
           const pluginModule = require(pluginName[0]);

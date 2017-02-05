@@ -151,7 +151,7 @@ describe('Plugin Import Module', () => {
 });
 
 
-describe('Autprefix', () => {
+describe('Plugin as a function', () => {
   const path = 'fixtures/app/styles/style.styl';
   it('Compile results and should be prefixed', () => {
     // import add plugin
