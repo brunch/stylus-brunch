@@ -1,6 +1,6 @@
 {
   "name": "stylus-brunch",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "description": "Adds Stylus support to brunch.",
   "author": "Paul Miller (http://paulmillr.com/)",
   "homepage": "https://github.com/brunch/stylus-brunch",
@@ -23,7 +23,7 @@
     "mocha": "^2.5.3",
     "chai": "^3.5.0",
     "eslint": "^3.0.1",
-    "eslint-config-brunch": "brunch/eslint-config-brunch",
+    "eslint-config-brunch": "^1",
     "autoprefixer-stylus": "0.13.0"
   },
   "eslintConfig": {
