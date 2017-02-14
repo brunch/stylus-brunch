@@ -56,6 +56,18 @@ describe('Plugin', () => {
         expect(result.data).to.equal(expected);
       });
     });
+
+    it('should throw error in correct format', () => {
+      const data = ">";
+      const expected = `:1:2 ParseError: fixtures/app/styles/style.styl:1:2
+   1| >
+-------^\n
+expected "indent", got "eos"\n`;
+
+      return plugin.compile({data, path}).catch(error => {
+        expect(error).to.equal(expected);
+      });
+    });
   });
 
   describe('getDependencies', () => {
