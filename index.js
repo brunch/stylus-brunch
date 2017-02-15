@@ -23,6 +23,9 @@ const cssModulify = (path, data, map) => {
   });
 };
 
+const location = message => /(:\d+){2}/.exec(message)[0];
+const getError = error => `${location(error.message)} ${error}`;
+
 class StylusCompiler {
   constructor(cfg) {
     if (cfg == null) cfg = {};
@@ -89,7 +92,10 @@ class StylusCompiler {
 
     return new Promise((resolve, reject) => {
       compiler.render((error, data) => {
-        if (error) return reject(error);
+        if (error) {
+          error.name = 'ParseError';
+          return reject(getError(error));
+        }
 
         if (this.modules) {
           cssModulify(path, data).then(resolve, reject);
