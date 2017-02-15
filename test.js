@@ -59,8 +59,7 @@ describe('Plugin', () => {
 
     it('should throw error in correct format', () => {
       const data = ">";
-      const expected = `:1:2 ParseError: fixtures/app/styles/style.styl:1:2
-   1| >
+      const expected = `L1:2 ParseError: \n   1| >
 -------^\n
 expected "indent", got "eos"\n`;
 
