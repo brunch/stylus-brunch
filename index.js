@@ -25,11 +25,15 @@ const cssModulify = (path, data, map) => {
 
 const re = /(([./\w]+)((:\d+){2}))/;
 const getError = error => {
-  const err = error.toString();
-  const match = err.match(re);
-  const text = err.replace(match[1], '');
+  error.name = '';
+  const str = error.toString();
+  const match = str.match(re);
+  const text = str.replace(match[1], '');
   const msg = `L${match[3].slice(1)} ${text}`;
-  return msg;
+  const err = new Error(msg);
+  err.name = '';
+  err.stack = error.stack;
+  return err;
 };
 
 class StylusCompiler {

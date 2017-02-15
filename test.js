@@ -59,12 +59,13 @@ describe('Plugin', () => {
 
     it('should throw error in correct format', () => {
       const data = ">";
-      const expected = `L1:2 ParseError: \n   1| >
+      const expected = `L1:2 \n   1| >
 -------^\n
 expected "indent", got "eos"\n`;
 
       return plugin.compile({data, path}).catch(error => {
-        expect(error).to.equal(expected);
+        expect(error.stack).to.be.a('string');
+        expect(error.toString()).to.equal(expected);
       });
     });
   });
