@@ -11,12 +11,14 @@ Install the plugin via npm with `npm install --save-dev stylus-brunch`.
 
 Or, do manual install:
 
-* Add `"stylus-brunch": "x.y.z"` to `package.json` of your brunch app.
+* Add `"stylus-brunch": "x.y"` to `package.json` of your brunch app.
   Pick a plugin version that corresponds to your minor (y) brunch version.
 * If you want to use git version of plugin, add
-`"stylus-brunch": "git+ssh://git@github.com:brunch/stylus-brunch.git"`.
+`"stylus-brunch": "github:brunch/stylus-brunch"`.
 
 ## Options
+
+**You don't need to specify any options by default.**
 
 ### Use Plugin Middleware
 
