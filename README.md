@@ -1,9 +1,9 @@
 # stylus-brunch
 
 Adds [Stylus](http://learnboost.github.com/stylus/) support to
-[brunch](http://brunch.io).
+[Brunch](http://brunch.io).
 
-The plugin includes [nib](http://visionmedia.github.com/nib/) cross-browser mixins.
+The plugin includes [nib](http://tj.github.io/nib/) cross-browser mixins.
 
 ## Usage
 
