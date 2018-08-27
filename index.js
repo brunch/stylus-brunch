@@ -117,6 +117,6 @@ class StylusCompiler {
 StylusCompiler.prototype.brunchPlugin = true;
 StylusCompiler.prototype.type = 'stylesheet';
 StylusCompiler.prototype.extension = 'styl';
-
+StylusCompiler.prototype.targetExtension = 'css';
 
 module.exports = StylusCompiler;
