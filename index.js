@@ -65,7 +65,7 @@ class StylusCompiler {
       .set('compress', false)
       .set('firebug', !!cfg.firebug)
       .set('linenos', !!cfg.linenos)
-      .set('include css', !!cfg.includeCss)
+      .set('include css', true)
       .include(sysPath.join(this.rootPath))
       .include(sysPath.dirname(path));
 
