@@ -2,6 +2,7 @@
 
 const sysPath = require('path');
 const stylus = require('stylus');
+const nib = require('nib');
 const progeny = require('progeny');
 
 const postcss = require('postcss');
@@ -67,7 +68,8 @@ class StylusCompiler {
       .set('linenos', !!cfg.linenos)
       .set('include css', true)
       .include(sysPath.join(this.rootPath))
-      .include(sysPath.dirname(path));
+      .include(sysPath.dirname(path))
+      .use(nib());
 
     const defines = cfg.defines || {};
     const paths = cfg.paths;
