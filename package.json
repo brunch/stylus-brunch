@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "stylus": "~0.54.5",
+    "nib": "~1.1.0",
     "progeny": "~0.12.0",
     "postcss": "~5.0.19",
     "postcss-modules": "~0.4.0"
