@@ -66,7 +66,7 @@ class StylusCompiler {
       .set('compress', false)
       .set('firebug', !!cfg.firebug)
       .set('linenos', !!cfg.linenos)
-      .set('include css', !!cfg.includeCss)
+      .set('include css', true)
       .include(sysPath.join(this.rootPath))
       .include(sysPath.dirname(path))
       .use(nib());
@@ -117,6 +117,6 @@ class StylusCompiler {
 StylusCompiler.prototype.brunchPlugin = true;
 StylusCompiler.prototype.type = 'stylesheet';
 StylusCompiler.prototype.extension = 'styl';
-
+StylusCompiler.prototype.targetExtension = 'css';
 
 module.exports = StylusCompiler;
