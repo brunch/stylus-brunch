@@ -12,7 +12,9 @@
     "test": "eslint index.js && mocha"
   },
   "license": "MIT",
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "stylus": "~0.54.7",
     "nib": "~1.1.2",
