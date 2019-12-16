@@ -1,6 +1,6 @@
 {
   "name": "stylus-brunch",
-  "version": "3.0.0-pre",
+  "version": "3.0.0",
   "description": "Adds Stylus support to brunch.",
   "author": "Paul Miller (https://paulmillr.com/)",
   "homepage": "https://github.com/brunch/stylus-brunch",
